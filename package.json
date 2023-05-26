@@ -199,8 +199,6 @@
     "watch": "theiaext watch"
   },
   "devDependencies": {
-    "@theia/ext-scripts": "1.38.0",
-    "@theia/re-exports": "1.38.0",
     "minimist": "^1.2.0"
   },
   "nyc": {
