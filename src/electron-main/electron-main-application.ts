@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { inject, injectable, named } from 'inversify';
@@ -37,6 +37,7 @@ import { ElectronMainApplicationGlobals } from './electron-main-constants';
 import { createDisposableListener } from './event-utils';
 import { TheiaRendererAPI } from './electron-api-main';
 import { StopReason } from '../common/frontend-application-state';
+import { dynamicRequire } from '../node/dynamic-require';
 
 export { ElectronMainApplicationGlobals };
 
@@ -76,7 +77,7 @@ export interface ElectronMainExecutionParams {
  * From an `electron-main` module:
  *
  *     bind(ElectronConnectionHandler).toDynamicValue(context =>
- *          new JsonRpcConnectionHandler(electronMainWindowServicePath,
+ *          new RpcConnectionHandler(electronMainWindowServicePath,
  *          () => context.container.get(ElectronMainWindowService))
  *     ).inSingletonScope();
  *
@@ -312,7 +313,7 @@ export class ElectronMainApplication {
                 // Setting the following option to `true` causes some features to break, somehow.
                 // Issue: https://github.com/eclipse-theia/theia/issues/8577
                 nodeIntegrationInWorker: false,
-                preload: path.resolve(this.globals.THEIA_APP_PROJECT_PATH, 'lib/preload.js').toString()
+                preload: path.resolve(this.globals.THEIA_APP_PROJECT_PATH, 'lib', 'frontend', 'preload.js').toString()
             },
             ...this.config.electron?.windowOptions || {},
         };
@@ -488,7 +489,9 @@ export class ElectronMainApplication {
         if (noBackendFork) {
             process.env[ElectronSecurityToken] = JSON.stringify(this.electronSecurityToken);
             // The backend server main file is supposed to export a promise resolving with the port used by the http(s) server.
-            const address: AddressInfo = await require(this.globals.THEIA_BACKEND_MAIN_PATH);
+            dynamicRequire(this.globals.THEIA_BACKEND_MAIN_PATH);
+            // @ts-expect-error
+            const address: AddressInfo = await globalThis.serverAddress;
             return address.port;
         } else {
             const backendProcess = fork(

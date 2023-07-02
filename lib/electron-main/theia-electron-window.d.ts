@@ -31,6 +31,7 @@ export declare class TheiaElectronWindow {
     protected closeIsConfirmed: boolean;
     protected applicationState: FrontendApplicationState;
     protected init(): void;
+    protected attachSecondaryWindowListener(): void;
     /**
      * Only show the window when the content is ready.
      */

@@ -16,7 +16,8 @@ export declare class BrowserKeyboardLayoutProvider implements KeyboardLayoutProv
     get allLayoutData(): KeyboardLayoutData[];
     get currentLayoutData(): KeyboardLayoutData;
     get currentLayoutSource(): KeyboardLayoutSource;
-    protected initialize(): Promise<void>;
+    protected init(): void;
+    protected doInit(): Promise<void>;
     getNativeLayout(): Promise<NativeKeyboardLayout>;
     /**
      * Set user-chosen keyboard layout data.

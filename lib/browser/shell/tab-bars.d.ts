@@ -37,6 +37,7 @@ export interface SideBarRenderData extends TabBar.IRenderData<Widget> {
     iconSize?: SizeData;
     paddingTop?: number;
     paddingBottom?: number;
+    visible?: boolean;
 }
 export interface ScrollableRenderData extends TabBar.IRenderData<Widget> {
     tabWidth?: number;
@@ -79,6 +80,7 @@ export declare class TabBarRenderer extends TabBar.Renderer {
      * @returns {VirtualElement} The virtual element of the rendered tab.
      */
     renderTab(data: SideBarRenderData, isInSidePanel?: boolean, isPartOfHiddenTabBar?: boolean): VirtualElement;
+    createTabClass(data: SideBarRenderData): string;
     /**
      * Generate ID for an entry in the tab bar
      * @param {Title<Widget>} title Title of the widget controlled by this tab bar
@@ -120,7 +122,7 @@ export declare class TabBarRenderer extends TabBar.Renderer {
      * @param {string | string[]} iconName The name of the icon.
      * @param {string[]} additionalClasses Additional classes of the icon.
      */
-    private getIconClass;
+    protected getIconClass(iconName: string | string[], additionalClasses?: string[]): string;
     /**
      * Find duplicate labels from the currently opened tabs in the tab bar.
      * Return the appropriate partial paths that can distinguish the identical labels.
@@ -150,12 +152,12 @@ export declare class TabBarRenderer extends TabBar.Renderer {
  */
 export declare class ScrollableTabBar extends TabBar<Widget> {
     protected scrollBar?: PerfectScrollbar;
-    private scrollBarFactory;
-    private pendingReveal?;
-    private isMouseOver;
+    protected scrollBarFactory: () => PerfectScrollbar;
+    protected pendingReveal?: Promise<void>;
+    protected isMouseOver: boolean;
     protected needsRecompute: boolean;
     protected tabSize: number;
-    private _dynamicTabOptions?;
+    protected _dynamicTabOptions?: ScrollableTabBar.Options;
     protected contentContainer: HTMLElement;
     protected topRow: HTMLElement;
     protected readonly toDispose: DisposableCollection;
@@ -172,7 +174,7 @@ export declare class ScrollableTabBar extends TabBar<Widget> {
      * Instead of this structure, we add a container for the `this.contentNode` and for the toolbar.
      * The scrollbar will only work for the `ul` part but it does not affect the toolbar, so it can be on the right hand-side.
      */
-    private rewireDOM;
+    protected rewireDOM(): void;
     protected onAfterAttach(msg: Message): void;
     protected onBeforeDetach(msg: Message): void;
     protected onUpdateRequest(msg: Message): void;
@@ -231,7 +233,7 @@ export declare class ToolbarAwareTabBar extends ScrollableTabBar {
     protected onUpdateRequest(msg: Message): void;
     protected updateToolbar(): void;
     handleEvent(event: Event): void;
-    private isOver;
+    protected isOver(event: Event, element: Element): boolean;
     /**
      * Restructures the DOM defined in PhosphorJS.
      *
@@ -239,13 +241,13 @@ export declare class ToolbarAwareTabBar extends ScrollableTabBar {
      * Instead of this structure, we add a container for the `this.contentNode` and for the toolbar.
      * The scrollbar will only work for the `ul` part but it does not affect the toolbar, so it can be on the right hand-side.
      */
-    private addBreadcrumbs;
+    protected addBreadcrumbs(): void;
 }
 /**
  * A specialized tab bar for side areas.
  */
 export declare class SideTabBar extends ScrollableTabBar {
-    private static readonly DRAG_THRESHOLD;
+    protected static readonly DRAG_THRESHOLD = 5;
     /**
      * Emitted when a tab is added to the tab bar.
      */
@@ -257,7 +259,23 @@ export declare class SideTabBar extends ScrollableTabBar {
      * emitted when the mouse is released on the selected tab without initiating a drag.
      */
     readonly collapseRequested: Signal<this, Title<Widget>>;
-    private mouseData?;
+    /**
+     * Emitted when the set of overflowing/hidden tabs changes.
+     */
+    readonly tabsOverflowChanged: Signal<this, {
+        titles: Title<Widget>[];
+        startIndex: number;
+    }>;
+    protected mouseData?: {
+        pressX: number;
+        pressY: number;
+        mouseDownTabIndex: number;
+    };
+    protected tabsOverflowData?: {
+        titles: Title<Widget>[];
+        startIndex: number;
+    };
+    protected _rowGap: number;
     constructor(options?: TabBar.IOptions<Widget> & PerfectScrollbar.Options);
     /**
      * Tab bars of the left and right side panel are arranged vertically by rotating their labels.
@@ -274,11 +292,20 @@ export declare class SideTabBar extends ScrollableTabBar {
     protected onAfterAttach(msg: Message): void;
     protected onAfterDetach(msg: Message): void;
     protected onUpdateRequest(msg: Message): void;
+    protected onResize(msg: Widget.ResizeMessage): void;
+    protected get tabRowGap(): number;
+    protected computeTabRowGap(): number;
+    /**
+     * Reveal the tab with the given index by moving it into the non-overflowing tabBar section
+     * if necessary.
+     */
+    revealTab(index: number): Promise<void>;
     /**
      * Render the tab bar in the _hidden content node_ (see `hiddenContentNode` for explanation),
      * then gather size information for labels and render it again in the proper content node.
      */
     protected updateTabs(): void;
+    protected computeOverflowingTabsData(startIndex: number): void;
     /**
      * Render the tab bar using the given DOM element as host. The optional `renderData` is forwarded
      * to the TabBarRenderer.
@@ -293,9 +320,9 @@ export declare class SideTabBar extends ScrollableTabBar {
      * mouse goes down, and thus collides with dragging.
      */
     handleEvent(event: Event): void;
-    private onMouseDown;
-    private onMouseUp;
-    private onMouseMove;
+    protected onMouseDown(event: MouseEvent): void;
+    protected onMouseUp(event: MouseEvent): void;
+    protected onMouseMove(event: MouseEvent): void;
     toCancelViewContainerDND: DisposableCollection;
     protected cancelViewContainerDND: () => void;
     /**

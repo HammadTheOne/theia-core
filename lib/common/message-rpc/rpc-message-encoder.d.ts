@@ -27,7 +27,7 @@ export interface RequestMessage {
 }
 export interface NotificationMessage {
     type: RpcMessageType.Notification;
-    id: number;
+    id?: number;
     method: string;
     args: any[];
 }
@@ -78,7 +78,7 @@ export interface RpcMessageDecoder {
  */
 export interface RpcMessageEncoder {
     cancel(buf: WriteBuffer, requestId: number): void;
-    notification(buf: WriteBuffer, requestId: number, method: string, args: any[]): void;
+    notification(buf: WriteBuffer, method: string, args: any[], id?: number): void;
     request(buf: WriteBuffer, requestId: number, method: string, args: any[]): void;
     replyOK(buf: WriteBuffer, requestId: number, res: any): void;
     replyErr(buf: WriteBuffer, requestId: number, err: any): void;
@@ -88,7 +88,7 @@ export declare class MsgPackMessageEncoder implements RpcMessageEncoder {
     protected readonly msgPack: MsgPack;
     constructor(msgPack?: MsgPack);
     cancel(buf: WriteBuffer, requestId: number): void;
-    notification(buf: WriteBuffer, requestId: number, method: string, args: any[]): void;
+    notification(buf: WriteBuffer, method: string, args: any[], id?: number): void;
     request(buf: WriteBuffer, requestId: number, method: string, args: any[]): void;
     replyOK(buf: WriteBuffer, requestId: number, res: any): void;
     replyErr(buf: WriteBuffer, requestId: number, err: any): void;

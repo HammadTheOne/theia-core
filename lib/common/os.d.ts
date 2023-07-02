@@ -1,5 +1,6 @@
 export declare const isWindows: boolean;
 export declare const isOSX: boolean;
+export declare const EOL: string;
 export declare type CMD = [string, string[]];
 export declare function cmd(command: string, ...args: string[]): CMD;
 export declare namespace OS {
@@ -20,6 +21,7 @@ export declare namespace OS {
         type: typeof type;
         isWindows: boolean;
         isOSX: boolean;
+        EOL: string;
     };
 }
 //# sourceMappingURL=os.d.ts.map

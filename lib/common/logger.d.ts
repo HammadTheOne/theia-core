@@ -171,16 +171,13 @@ export interface ILogger {
     child(name: string): ILogger;
 }
 export declare class Logger implements ILogger {
+    protected _logLevel: Promise<number>;
+    protected created: Promise<void>;
     protected readonly server: ILoggerServer;
     protected readonly loggerWatcher: LoggerWatcher;
     protected readonly factory: LoggerFactory;
     protected name: string;
-    protected _logLevel: Promise<number>;
-    protected created: Promise<void>;
-    /**
-     * Build a new Logger.
-     */
-    constructor(server: ILoggerServer, loggerWatcher: LoggerWatcher, factory: LoggerFactory, name: string);
+    protected init(): void;
     setLogLevel(logLevel: number): Promise<void>;
     getLogLevel(): Promise<number>;
     isEnabled(logLevel: number): Promise<boolean>;

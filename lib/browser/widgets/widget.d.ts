@@ -55,6 +55,7 @@ export declare class BaseWidget extends Widget {
     protected readonly toDisposeOnDetach: DisposableCollection;
     protected scrollBar?: PerfectScrollbar;
     protected scrollOptions?: PerfectScrollbar.Options;
+    constructor(options?: Widget.IOptions);
     dispose(): void;
     protected onCloseRequest(msg: Message): void;
     protected onBeforeAttach(msg: Message): void;

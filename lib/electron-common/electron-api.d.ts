@@ -20,7 +20,7 @@ export declare type InternalMenuDto = Omit<MenuDto, 'execute' | 'submenu'> & {
 };
 export declare type WindowEvent = 'maximize' | 'unmaximize' | 'focus';
 export interface TheiaCoreAPI {
-    getSecurityToken: () => Promise<string>;
+    getSecurityToken: () => string;
     attachSecurityToken: (endpoint: string) => Promise<void>;
     setMenuBarVisible(visible: boolean, windowName?: string): void;
     setMenu(menu: MenuDto[] | undefined): void;
@@ -37,6 +37,7 @@ export interface TheiaCoreAPI {
     close(): void;
     onWindowEvent(event: WindowEvent, handler: () => void): Disposable;
     setCloseRequestHandler(handler: (reason: StopReason) => Promise<boolean>): void;
+    setSecondaryWindowCloseRequestHandler(windowName: string, handler: () => Promise<boolean>): void;
     toggleDevTools(): void;
     getZoomLevel(): Promise<number>;
     setZoomLevel(desired: number): void;
@@ -83,6 +84,7 @@ export declare const CHANNEL_SET_ZOOM_LEVEL = "SetZoomLevel";
 export declare const CHANNEL_IS_FULL_SCREENABLE = "IsFullScreenable";
 export declare const CHANNEL_IS_FULL_SCREEN = "IsFullScreen";
 export declare const CHANNEL_TOGGLE_FULL_SCREEN = "ToggleFullScreen";
+export declare const CHANNEL_REQUEST_SECONDARY_CLOSE = "RequestSecondaryClose";
 export declare const CHANNEL_REQUEST_CLOSE = "RequestClose";
 export declare const CHANNEL_REQUEST_RELOAD = "RequestReload";
 export declare const CHANNEL_RESTART = "Restart";

@@ -5,6 +5,7 @@ import { Emitter } from '../common/event';
 import { SecondaryWindowService } from './window/secondary-window-service';
 import { KeybindingRegistry } from './keybinding';
 import { ColorApplicationContribution } from './color-application-contribution';
+import { StylingService } from './styling-service';
 /**
  * Offers functionality to move a widget out of the main window to a newly created window.
  * Widgets must explicitly implement the `ExtractableWidget` interface to support this.
@@ -15,13 +16,12 @@ import { ColorApplicationContribution } from './color-application-contribution';
  * @experimental The functionality provided by this handler is experimental and has known issues in Electron apps.
  */
 export declare class SecondaryWindowHandler {
-    /** List of currently open secondary windows. Window references should be removed once the window is closed. */
-    protected readonly secondaryWindows: Window[];
     /** List of widgets in secondary windows. */
     protected readonly _widgets: ExtractableWidget[];
     protected applicationShell: ApplicationShell;
     protected keybindings: KeybindingRegistry;
     protected colorAppContribution: ColorApplicationContribution;
+    protected stylingService: StylingService;
     protected readonly onDidAddWidgetEmitter: Emitter<Widget>;
     /** Subscribe to get notified when a widget is added to this handler, i.e. the widget was moved to an secondary window . */
     readonly onDidAddWidget: import("../common/event").Event<Widget>;

@@ -7,6 +7,6 @@ import { Emitter, Event } from '../../common/event';
 export declare class ElectronKeyboardLayoutChangeNotifier implements KeyboardLayoutChangeNotifier {
     protected readonly nativeLayoutChanged: Emitter<NativeKeyboardLayout>;
     get onDidChangeNativeLayout(): Event<NativeKeyboardLayout>;
-    protected initialize(): void;
+    protected init(): void;
 }
 //# sourceMappingURL=electron-keyboard-layout-change-notifier.d.ts.map

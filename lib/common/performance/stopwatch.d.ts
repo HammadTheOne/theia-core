@@ -11,7 +11,7 @@
 * with the GNU Classpath Exception which is available at
 * https://www.gnu.org/software/classpath/license.html.
 *
-* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 *******************************************************************************/
 import { ILogger, LogLevel } from '../logger';
 import { MaybePromise } from '../types';
@@ -35,7 +35,7 @@ interface LogOptions extends MeasurementOptions {
 export declare abstract class Stopwatch {
     protected readonly defaultLogOptions: LogOptions;
     protected readonly logger: ILogger;
-    protected constructor(defaultLogOptions: LogOptions);
+    constructor(defaultLogOptions: LogOptions);
     /**
      * Create a {@link Measurement} that will compute its elapsed time when logged.
      *

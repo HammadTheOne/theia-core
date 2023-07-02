@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { interfaces } from 'inversify';
@@ -34,7 +34,7 @@ const windowTitleDescription = [
     '`${activeFolderLong}`: the full path of the folder the file is contained in (e.g. /Users/Development/myFolder/myFileFolder).',
     '`${folderName}`: name of the workspace folder the file is contained in (e.g. myFolder).',
     '`${folderPath}`: file path of the workspace folder the file is contained in (e.g. /Users/Development/myFolder).',
-    '`${rootName}`: name of the opened workspace or folder (e.g. myFolder or myWorkspace).',
+    '`${rootName}`: name of the workspace with optional remote name and workspace indicator if applicable (e.g. myFolder, myRemoteFolder [SSH] or myWorkspace (Workspace)).',
     '`${rootPath}`: file path of the opened workspace or folder (e.g. /Users/Development/myWorkspace).',
     '`${appName}`: e.g. VS Code.',
     '`${remoteName}`: e.g. SSH',

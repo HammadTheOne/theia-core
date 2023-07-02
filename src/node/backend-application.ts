@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import * as path from 'path';
@@ -47,7 +47,12 @@ export interface BackendApplicationServer extends BackendApplicationContribution
 
 export const BackendApplicationContribution = Symbol('BackendApplicationContribution');
 /**
- * Contribution for hooking into the backend lifecycle.
+ * Contribution for hooking into the backend lifecycle:
+ *
+ * - `initialize()`
+ * - `configure(expressApp)`
+ * - `onStart(httpServer)`
+ * - `onStop()`
  */
 export interface BackendApplicationContribution {
     /**
@@ -134,7 +139,6 @@ export class BackendApplicationCliContribution implements CliContribution {
         }
         return process.cwd();
     }
-
 }
 
 /**
@@ -196,6 +200,10 @@ export class BackendApplication {
     }
 
     @postConstruct()
+    protected init(): void {
+        this.configure();
+    }
+
     protected async configure(): Promise<void> {
         // Do not await the initialization because contributions are expected to handle
         // concurrent initialize/configure in undefined order if they provide both
@@ -312,7 +320,7 @@ export class BackendApplication {
         const acceptedEncodings = req.acceptsEncodings();
 
         const gzUrl = `${req.url}.gz`;
-        const gzPath = path.join(this.applicationPackage.projectPath, 'lib', gzUrl);
+        const gzPath = path.join(this.applicationPackage.projectPath, 'lib', 'frontend', gzUrl);
         if (acceptedEncodings.indexOf('gzip') === -1 || !(await fs.pathExists(gzPath))) {
             next();
             return;

@@ -1,4 +1,4 @@
-import { TabBar, Widget, DockPanel, Panel } from '@phosphor/widgets';
+import { TabBar, Widget, DockPanel, Title, Panel } from '@phosphor/widgets';
 import { AttachedProperty } from '@phosphor/properties';
 import { TabBarRenderer, SideTabBar } from './tab-bars';
 import { SidebarMenuWidget, SidebarMenu } from './sidebar-menu-widget';
@@ -12,6 +12,7 @@ import { ContextMenuRenderer } from '../context-menu-renderer';
 import { MenuPath } from '../../common/menu';
 import { SidebarBottomMenuWidget } from './sidebar-bottom-menu-widget';
 import { SidebarTopMenuWidget } from './sidebar-top-menu-widget';
+import { AdditionalViewsMenuWidget, AdditionalViewsMenuWidgetFactory } from './additional-views-menu-widget';
 /** The class name added to the left and right area panels. */
 export declare const LEFT_RIGHT_AREA_CLASS = "theia-app-sides";
 export declare const SidePanelHandlerFactory: unique symbol;
@@ -33,6 +34,11 @@ export declare class SidePanelHandler {
      * tab bar itself remains visible as long as there is at least one widget.
      */
     tabBar: SideTabBar;
+    /**
+     * Conditional menu placed below the tabBar. Manages overflowing/hidden tabs.
+     * Is only visible if there are overflowing tabs.
+     */
+    additionalViewsMenu: AdditionalViewsMenuWidget;
     /**
      * The menu placed on the sidebar top.
      * Displayed as icons.
@@ -77,6 +83,7 @@ export declare class SidePanelHandler {
     protected tabBarRendererFactory: () => TabBarRenderer;
     protected sidebarTopWidgetFactory: () => SidebarTopMenuWidget;
     protected sidebarBottomWidgetFactory: () => SidebarBottomMenuWidget;
+    protected additionalViewsMenuFactory: AdditionalViewsMenuWidgetFactory;
     protected splitPositionHandler: SplitPositionHandler;
     protected readonly applicationStateService: FrontendApplicationStateService;
     protected readonly dockPanelFactory: TheiaDockPanel.Factory;
@@ -88,6 +95,7 @@ export declare class SidePanelHandler {
     protected createSideBar(): SideTabBar;
     protected createSidePanel(): TheiaDockPanel;
     protected createToolbar(): SidePanelToolbar;
+    protected createAdditionalViewsWidget(): AdditionalViewsMenuWidget;
     protected createSidebarTopMenu(): SidebarTopMenuWidget;
     protected createSidebarBottomMenu(): SidebarBottomMenuWidget;
     protected createSidebarMenu<T extends SidebarMenuWidget>(factory: () => T): T;
@@ -186,6 +194,10 @@ export declare class SidePanelHandler {
      * moved to another application shell area.
      */
     protected onTabDetachRequested(sender: SideTabBar, { title, tab, clientX, clientY }: TabBar.ITabDetachRequestedArgs<Widget>): void;
+    protected onTabsOverflowChanged(sender: SideTabBar, event: {
+        titles: Title<Widget>[];
+        startIndex: number;
+    }): void;
     protected onWidgetAdded(sender: DockPanel, widget: Widget): void;
     protected onWidgetRemoved(sender: DockPanel, widget: Widget): void;
     protected updateSashState(sidePanelElement: Panel | null, sidePanelCollapsed: boolean): void;

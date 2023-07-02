@@ -24,7 +24,8 @@ export declare class ElectronContextMenuRenderer extends BrowserContextMenuRende
     protected readonly preferenceService: PreferenceService;
     protected useNativeStyle: boolean;
     constructor(electronMenuFactory: ElectronMainMenuFactory);
-    protected init(): Promise<void>;
+    protected init(): void;
+    protected doInit(): Promise<void>;
     protected doRender(options: RenderContextMenuOptions): ContextMenuAccess;
 }
 //# sourceMappingURL=electron-context-menu-renderer.d.ts.map

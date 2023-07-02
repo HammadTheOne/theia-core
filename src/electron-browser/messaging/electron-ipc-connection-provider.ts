@@ -11,11 +11,11 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { injectable, interfaces } from 'inversify';
-import { JsonRpcProxy } from '../../common/messaging';
+import { RpcProxy } from '../../common/messaging';
 import { AbstractConnectionProvider } from '../../common/messaging/abstract-connection-provider';
 import { AbstractChannel, Channel, WriteBuffer } from '../../common';
 import { Uint8ArrayReadBuffer, Uint8ArrayWriteBuffer } from '../../common/message-rpc/uint8-array-message-buffer';
@@ -29,7 +29,7 @@ export interface ElectronIpcOptions {
 @injectable()
 export class ElectronIpcConnectionProvider extends AbstractConnectionProvider<ElectronIpcOptions> {
 
-    static override createProxy<T extends object>(container: interfaces.Container, path: string, arg?: object): JsonRpcProxy<T> {
+    static override createProxy<T extends object>(container: interfaces.Container, path: string, arg?: object): RpcProxy<T> {
         return container.get(ElectronIpcConnectionProvider).createProxy<T>(path, arg);
     }
 

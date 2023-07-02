@@ -1,7 +1,7 @@
 import { interfaces } from 'inversify';
 import { Emitter, Event } from '../event';
 import { ConnectionHandler } from './handler';
-import { JsonRpcProxy, JsonRpcProxyFactory } from './proxy-factory';
+import { RpcProxy, RpcProxyFactory } from './proxy-factory';
 import { Channel, ChannelMultiplexer } from '../message-rpc/channel';
 /**
  * Factor common logic according to `ElectronIpcConnectionProvider` and
@@ -13,14 +13,14 @@ export declare abstract class AbstractConnectionProvider<AbstractOptions extends
      * Create a proxy object to remote interface of T type
      * over an electron ipc connection for the given path and proxy factory.
      */
-    static createProxy<T extends object>(container: interfaces.Container, path: string, factory: JsonRpcProxyFactory<T>): JsonRpcProxy<T>;
+    static createProxy<T extends object>(container: interfaces.Container, path: string, factory: RpcProxyFactory<T>): RpcProxy<T>;
     protected readonly onIncomingMessageActivityEmitter: Emitter<void>;
     get onIncomingMessageActivity(): Event<void>;
     /**
      * Create a proxy object to remote interface of T type
      * over a web socket connection for the given path and proxy factory.
      */
-    createProxy<T extends object>(path: string, factory: JsonRpcProxyFactory<T>): JsonRpcProxy<T>;
+    createProxy<T extends object>(path: string, factory: RpcProxyFactory<T>): RpcProxy<T>;
     /**
      * Create a proxy object to remote interface of T type
      * over a web socket connection for the given path.
@@ -28,7 +28,7 @@ export declare abstract class AbstractConnectionProvider<AbstractOptions extends
      * An optional target can be provided to handle
      * notifications and requests from a remote side.
      */
-    createProxy<T extends object>(path: string, target?: object): JsonRpcProxy<T>;
+    createProxy<T extends object>(path: string, target?: object): RpcProxy<T>;
     protected channelMultiplexer?: ChannelMultiplexer;
     protected reconnectChannelOpeners: Array<() => Promise<void>>;
     protected initializeMultiplexer(): void;
