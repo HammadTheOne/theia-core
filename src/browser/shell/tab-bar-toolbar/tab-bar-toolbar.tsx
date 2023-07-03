@@ -157,7 +157,6 @@ export class TabBarToolbar extends ReactWidget {
             classNames.push(iconClass);
         }
         const tooltip = item.tooltip || (command && command.label);
-        console.log('the tooltip is ', tooltip, innerText);
 
         const toolbarItemClassNames = this.getToolbarItemClassNames(item);
         return <div key={item.id}
@@ -167,7 +166,7 @@ export class TabBarToolbar extends ReactWidget {
             onMouseOut={this.onMouseUpEvent} >
             <div id={item.id} className={classNames.join(' ')}
                 onClick={this.executeCommand}
-                title={'The tooltip did change'}>{'The innertext changed'}
+                title={tooltip}>{innerText}
             </div>
         </div>;
     }
@@ -196,7 +195,7 @@ export class TabBarToolbar extends ReactWidget {
     protected renderMore(): React.ReactNode {
         return !!this.more.size && <div key='__more__' className={TabBarToolbar.Styles.TAB_BAR_TOOLBAR_ITEM + ' enabled'}>
             <div id='__more__' className={codicon('ellipsis', true)} onClick={this.showMoreContextMenu}
-                title={nls.localizeByDefault('1 line changed')} />
+                title={nls.localizeByDefault('More Actions...')} />
         </div>;
     }
 
