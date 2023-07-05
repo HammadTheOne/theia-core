@@ -23,6 +23,7 @@ export declare class JsonSchemaStore implements FrontendApplicationContribution 
 }
 export declare class DefaultJsonSchemaContribution implements JsonSchemaContribution {
     protected readonly requestService: RequestService;
+    protected readonly jsonSchemaUrl: string;
     registerSchemas(context: JsonSchemaRegisterContext): Promise<void>;
 }
 export declare namespace DefaultJsonSchemaContribution {
