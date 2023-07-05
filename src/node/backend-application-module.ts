@@ -11,14 +11,14 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { ContainerModule, decorate, injectable } from 'inversify';
 import { ApplicationPackage } from '@theia/application-package';
 import { REQUEST_SERVICE_PATH } from '@theia/request';
 import {
-    bindContributionProvider, MessageService, MessageClient, ConnectionHandler, RpcConnectionHandler,
+    bindContributionProvider, MessageService, MessageClient, ConnectionHandler, JsonRpcConnectionHandler,
     CommandService, commandServicePath, messageServicePath
 } from '../common';
 import { BackendApplication, BackendApplicationContribution, BackendApplicationCliContribution, BackendApplicationServer } from './backend-application';
@@ -40,7 +40,6 @@ import { ProxyCliContribution } from './request/proxy-cli-contribution';
 import { bindNodeStopwatch, bindBackendStopwatchServer } from './performance';
 import { OSBackendApplicationContribution } from './os-backend-application-contribution';
 import { BackendRequestFacade } from './request/backend-request-facade';
-import { FileSystemLocking, FileSystemLockingImpl } from './filesystem-locking';
 
 decorate(injectable(), ApplicationPackage);
 
@@ -86,14 +85,14 @@ export const backendApplicationModule = new ContainerModule(bind => {
     bind(ApplicationServerImpl).toSelf().inSingletonScope();
     bind(ApplicationServer).toService(ApplicationServerImpl);
     bind(ConnectionHandler).toDynamicValue(ctx =>
-        new RpcConnectionHandler(applicationPath, () =>
+        new JsonRpcConnectionHandler(applicationPath, () =>
             ctx.container.get(ApplicationServer)
         )
     ).inSingletonScope();
 
     bind(EnvVariablesServer).to(EnvVariablesServerImpl).inSingletonScope();
     bind(ConnectionHandler).toDynamicValue(ctx =>
-        new RpcConnectionHandler(envVariablesPath, () => {
+        new JsonRpcConnectionHandler(envVariablesPath, () => {
             const envVariablesServer = ctx.container.get<EnvVariablesServer>(EnvVariablesServer);
             return envVariablesServer;
         })
@@ -108,7 +107,7 @@ export const backendApplicationModule = new ContainerModule(bind => {
     bindContributionProvider(bind, WsRequestValidatorContribution);
     bind(KeytarService).to(KeytarServiceImpl).inSingletonScope();
     bind(ConnectionHandler).toDynamicValue(ctx =>
-        new RpcConnectionHandler(keytarServicePath, () => ctx.container.get<KeytarService>(KeytarService))
+        new JsonRpcConnectionHandler(keytarServicePath, () => ctx.container.get<KeytarService>(KeytarService))
     ).inSingletonScope();
 
     bind(ContributionFilterRegistry).to(ContributionFilterRegistryImpl).inSingletonScope();
@@ -124,11 +123,9 @@ export const backendApplicationModule = new ContainerModule(bind => {
 
     bind(BackendRequestFacade).toSelf().inSingletonScope();
     bind(ConnectionHandler).toDynamicValue(
-        ctx => new RpcConnectionHandler(REQUEST_SERVICE_PATH, () => ctx.container.get(BackendRequestFacade))
+        ctx => new JsonRpcConnectionHandler(REQUEST_SERVICE_PATH, () => ctx.container.get(BackendRequestFacade))
     ).inSingletonScope();
 
     bindNodeStopwatch(bind);
     bindBackendStopwatchServer(bind);
-
-    bind(FileSystemLocking).to(FileSystemLockingImpl).inSingletonScope();
 });

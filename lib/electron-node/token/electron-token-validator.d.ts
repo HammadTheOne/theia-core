@@ -8,7 +8,7 @@ import { WsRequestValidatorContribution } from '../../node/ws-request-validators
  */
 export declare class ElectronTokenValidator implements WsRequestValidatorContribution {
     protected electronSecurityToken: ElectronSecurityToken;
-    protected init(): void;
+    protected postConstruct(): void;
     allowWsUpgrade(request: http.IncomingMessage): MaybePromise<boolean>;
     /**
      * Expects the token to be passed via cookies by default.

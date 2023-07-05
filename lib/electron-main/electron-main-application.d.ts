@@ -42,7 +42,7 @@ export interface ElectronMainExecutionParams {
  * From an `electron-main` module:
  *
  *     bind(ElectronConnectionHandler).toDynamicValue(context =>
- *          new RpcConnectionHandler(electronMainWindowServicePath,
+ *          new JsonRpcConnectionHandler(electronMainWindowServicePath,
  *          () => context.container.get(ElectronMainWindowService))
  *     ).inSingletonScope();
  *

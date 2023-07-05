@@ -16,8 +16,7 @@ export declare class AboutDialog extends ReactDialog<void> {
     protected readonly appServer: ApplicationServer;
     protected readonly windowService: WindowService;
     constructor(props: AboutDialogProps);
-    protected init(): void;
-    protected doInit(): Promise<void>;
+    protected init(): Promise<void>;
     protected renderHeader(): React.ReactNode;
     protected renderExtensions(): React.ReactNode;
     protected render(): React.ReactNode;

@@ -6,7 +6,6 @@ import { QuickAccessContribution, QuickAccessProvider, QuickAccessRegistry } fro
 import { QuickPickItem, QuickPicks } from './quick-input-service';
 export declare const quickCommand: Command;
 export declare const CLEAR_COMMAND_HISTORY: Command;
-export declare const CLOSE_QUICK_OPEN: Command;
 export declare class QuickCommandService implements QuickAccessContribution, QuickAccessProvider {
     static PREFIX: string;
     protected readonly contextKeyService: ContextKeyService;

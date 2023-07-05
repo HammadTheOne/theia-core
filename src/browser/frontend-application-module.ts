@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import '../../src/browser/style/index.css';
@@ -121,7 +121,7 @@ import {
     BreadcrumbsService,
     DefaultBreadcrumbRenderer,
 } from './breadcrumbs';
-import { DockPanel, RendererHost } from './widgets';
+import { RendererHost } from './widgets';
 import { TooltipService, TooltipServiceImpl } from './tooltip-service';
 import { BackendRequestService, RequestService, REQUEST_SERVICE_PATH } from '@theia/request';
 import { bindFrontendStopwatch, bindBackendStopwatch } from './performance';
@@ -136,7 +136,6 @@ import { MarkdownRenderer, MarkdownRendererFactory, MarkdownRendererImpl } from 
 import { StylingParticipant, StylingService } from './styling-service';
 import { bindCommonStylingParticipants } from './common-styling-participants';
 import { HoverService } from './hover-service';
-import { AdditionalViewsMenuWidget, AdditionalViewsMenuWidgetFactory } from './shell/additional-views-menu-widget';
 
 export { bindResourceProvider, bindMessageService, bindPreferenceService };
 
@@ -168,12 +167,6 @@ export const frontendApplicationModule = new ContainerModule((bind, _unbind, _is
     bind(SidebarMenuWidget).toSelf();
     bind(SidebarBottomMenuWidget).toSelf();
     bind(SidebarBottomMenuWidgetFactory).toAutoFactory(SidebarBottomMenuWidget);
-    bind(AdditionalViewsMenuWidget).toSelf();
-    bind(AdditionalViewsMenuWidgetFactory).toFactory(ctx => (side: 'left' | 'right') => {
-        const widget = ctx.container.resolve(AdditionalViewsMenuWidget);
-        widget.side = side;
-        return widget;
-    });
     bind(SplitPositionHandler).toSelf().inSingletonScope();
 
     bindContributionProvider(bind, TabBarToolbarContribution);
@@ -197,7 +190,7 @@ export const frontendApplicationModule = new ContainerModule((bind, _unbind, _is
         const hoverService = container.get(HoverService);
         return new TabBarRenderer(contextMenuRenderer, tabBarDecoratorService, iconThemeService, selectionService, commandService, corePreferences, hoverService);
     });
-    bind(TheiaDockPanel.Factory).toFactory(({ container }) => (options?: DockPanel.IOptions) => {
+    bind(TheiaDockPanel.Factory).toFactory(({ container }) => options => {
         const corePreferences = container.get<CorePreferences>(CorePreferences);
         return new TheiaDockPanel(options, corePreferences);
     });

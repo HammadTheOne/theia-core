@@ -40,8 +40,8 @@ export declare namespace BadgeWidget {
     function is(arg: unknown): arg is BadgeWidget;
 }
 /**
- * A widget that may change it's internal structure dynamically.
- * Current use is to update the toolbar when a contributed view is constructed "lazily".
+ * A widget that may change it's internal structure dynamically. Current use is for
+ * updating the toolbar when a contributed view is contructed "lazily"
  */
 export interface DynamicToolbarWidget {
     onDidChangeToolbarItems: CommonEvent<void>;

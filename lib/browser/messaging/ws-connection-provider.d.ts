@@ -1,5 +1,5 @@
 import { interfaces } from 'inversify';
-import { RpcProxy, Emitter, Event, Channel } from '../../common';
+import { JsonRpcProxy, Emitter, Event, Channel } from '../../common';
 import { AbstractConnectionProvider } from '../../common/messaging/abstract-connection-provider';
 import { Socket } from 'socket.io-client';
 import { IWebSocket } from '../../common/messaging/web-socket-channel';
@@ -14,7 +14,7 @@ export declare class WebSocketConnectionProvider extends AbstractConnectionProvi
     get onSocketDidOpen(): Event<void>;
     protected readonly onSocketDidCloseEmitter: Emitter<void>;
     get onSocketDidClose(): Event<void>;
-    static createProxy<T extends object>(container: interfaces.Container, path: string, arg?: object): RpcProxy<T>;
+    static createProxy<T extends object>(container: interfaces.Container, path: string, arg?: object): JsonRpcProxy<T>;
     protected readonly socket: Socket;
     constructor();
     protected createMainChannel(): Channel;

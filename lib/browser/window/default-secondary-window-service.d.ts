@@ -1,7 +1,5 @@
 import { SecondaryWindowService } from './secondary-window-service';
 import { WindowService } from './window-service';
-import { ExtractableWidget } from '../widgets';
-import { ApplicationShell } from '../shell';
 export declare class DefaultSecondaryWindowService implements SecondaryWindowService {
     protected static SECONDARY_WINDOW_URL: string;
     /**
@@ -14,9 +12,9 @@ export declare class DefaultSecondaryWindowService implements SecondaryWindowSer
     protected secondaryWindows: Window[];
     protected readonly windowService: WindowService;
     init(): void;
-    createSecondaryWindow(widget: ExtractableWidget, shell: ApplicationShell): Window | undefined;
-    protected findWindow<T>(windowName: string): Window | undefined;
-    protected doCreateSecondaryWindow(widget: ExtractableWidget, shell: ApplicationShell): Window | undefined;
+    createSecondaryWindow(onClose?: (closedWin: Window) => void): Window | undefined;
+    protected doCreateSecondaryWindow(onClose?: (closedWin: Window) => void): Window | undefined;
+    protected handleWindowClosed(win: Window, onClose?: (closedWin: Window) => void): void;
     focus(win: Window): void;
     protected nextWindowId(): string;
 }

@@ -61,6 +61,6 @@ export declare class RpcProtocol {
     sendCancel(requestId: number): void;
     protected handleCancel(id: number): void;
     protected handleRequest(id: number, method: string, args: any[]): Promise<void>;
-    protected handleNotify(method: string, args: any[], id?: number): Promise<void>;
+    protected handleNotify(id: number, method: string, args: any[]): Promise<void>;
 }
 //# sourceMappingURL=rpc-protocol.d.ts.map

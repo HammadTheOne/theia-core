@@ -1,5 +1,4 @@
 {
-  "debug.breakpoint.editCondition": "Warunek edycji...",
   "terminal:new:profile": "Tworzenie nowego zintegrowanego terminalu z profilu",
   "terminal:profile:default": "Wybierz domyślny profil terminala",
   "theia": {
@@ -45,10 +44,6 @@
         "pc": "Klawiatury PC",
         "tryDetect": "Spróbuj wykryć układ klawiatury na podstawie informacji z przeglądarki i wciśniętych klawiszy."
       },
-      "navigator": {
-        "clipboardWarn": "Dostęp do schowka jest zablokowany. Sprawdź uprawnienia przeglądarki.",
-        "clipboardWarnFirefox": "Interfejs API schowka nie jest dostępny. Można go włączyć za pomocą opcji '{0}' na stronie '{1}'. Następnie należy ponownie załadować Theia. Uwaga, pozwoli to FireFox uzyskać pełny dostęp do schowka systemowego."
-      },
       "offline": "Offline",
       "quitMessage": "Wszelkie niezapisane zmiany nie zostaną zapisane.",
       "resetWorkbenchLayout": "Resetuj układ stołu warsztatowego",
@@ -77,12 +72,15 @@
       "toggleTracing": "Włączanie/wyłączanie śledzenia komunikacji z adapterami debugowania"
     },
     "editor": {
+      "diffEditor.diffAlgorithm.experimental": "Wykorzystuje eksperymentalny algorytm diffingu.",
+      "diffEditor.diffAlgorithm.smart": "Używa domyślnego algorytmu dyfuzji.",
       "dirtyEncoding": "Plik jest zabrudzony. Proszę zapisać go najpierw przed ponownym otwarciem z innym kodowaniem.",
       "editor.codeActionWidget.showHeaders": "Włączenie/wyłączenie pokazywania nagłówków grup w menu akcji kodu.",
       "editor.formatOnSaveMode.modificationsIfAvailable": "Spowoduje próbę sformatowania tylko modyfikacji (wymaga kontroli źródła). Jeśli kontrola źródła nie może być użyta, sformatowany zostanie cały plik.",
       "editor.inlayHints.enabled1": "Podpowiedzi są domyślnie wyświetlane i ukrywają się po przytrzymaniu `Ctrl+Alt`.",
       "editor.inlayHints.enabled2": "Podpowiedzi są domyślnie ukryte i pokazują się po przytrzymaniu `Ctrl+Alt`.",
       "editor.quickSuggestions": "Kontroluje czy sugestie powinny być automatycznie wyświetlane podczas pisania. Można to kontrolować w przypadku wpisywania komentarzy, ciągów znaków i innego kodu. Szybkie sugestie mogą być skonfigurowane tak, aby pokazywały się jako tekst widma lub z widżetem sugestii. Należy również pamiętać o ustawieniu '#editor.suggestOnTriggerCharacters#', które kontroluje czy sugestie są uruchamiane przez znaki specjalne.",
+      "editor.stickyScroll.maxLineCount": "Określa maksymalną liczbę lepkich linii do pokazania.",
       "editor.suggest.matchOnWordStartOnly": "Kiedy włączone filtrowanie IntelliSense wymaga, aby pierwszy znak pasował na początku słowa, np. `c` na `Console` lub `WebContext` ale _nie_ na `description`. Kiedy wyłączone IntelliSense pokaże więcej wyników, ale nadal sortuje je według jakości dopasowania.",
       "files.autoSave": "Steruje funkcją [automatycznego zapisywania](https://code.visualstudio.com/docs/editor/codebasics#_save-auto-save) edytorów, w których nie zapisano zmian.",
       "files.autoSave.afterDelay": "Edytor ze zmianami jest automatycznie zapisywany po upływie skonfigurowanego czasu `#files.autoSaveDelay#`.",
@@ -159,15 +157,11 @@
       "gitDecorationsColors": "Użyj dekoracji kolorystycznej w nawigatorze.",
       "mergeQuickPickPlaceholder": "Wybierz gałąź, która ma zostać połączona z aktualnie aktywną gałęzią {0}:",
       "missingUserInfo": "Upewnij się, że skonfigurowałeś swoje 'user.name' i 'user.email' w git.",
-      "noHistoryForError": "Nie ma dostępnej historii dla {0}",
       "noPreviousCommit": "Brak wcześniejszych zobowiązań do zmiany",
       "noRepositoriesSelected": "Nie wybrano żadnych repozytoriów.",
-      "prepositionIn": "w",
       "repositoryNotInitialized": "Repozytorium {0} nie jest jeszcze zainicjalizowane.",
       "stashChanges": "Zmiany w schowku. Wcisnąć 'Enter', aby potwierdzić lub 'Escape', aby anulować.",
       "stashChangesWithMessage": "Zmiany w pamięci masowej z komunikatem: {0}. Wcisnąć 'Enter', aby potwierdzić lub 'Escape', aby anulować.",
-      "tabTitleIndex": "{0} (indeks)",
-      "tabTitleWorkingTree": "{0} (Drzewo robocze)",
       "toggleBlameAnnotations": "Przełączanie adnotacji o winie"
     },
     "keybinding-schema-updater": {
@@ -216,6 +210,7 @@
         "offset-title": "Bajty do przesunięcia pamięci z {0}"
       },
       "editable": {
+        "apply": "Zastosuj zmiany",
         "clear": "Wyraźne zmiany"
       },
       "endianness": "Endianness",
@@ -277,8 +272,6 @@
     },
     "navigator": {
       "autoReveal": "Auto ujawnienie",
-      "clipboardWarn": "Dostęp do schowka jest zablokowany. Sprawdź uprawnienia przeglądarki.",
-      "clipboardWarnFirefox": "Interfejs API schowka nie jest dostępny. Można go włączyć za pomocą opcji '{0}' na stronie '{1}'. Następnie należy ponownie załadować Theia. Uwaga, pozwoli to FireFox uzyskać pełny dostęp do schowka systemowego.",
       "refresh": "Odśwież w Eksploratorze",
       "reveal": "Ujawnij w Eksploratorze",
       "toggleHiddenFiles": "Przełącz ukryte pliki"
@@ -289,7 +282,6 @@
       "hiddenChannels": "Ukryte kanały",
       "hideOutputChannel": "Ukryj kanał wyjściowy...",
       "maxChannelHistory": "Maksymalna liczba wpisów w kanale wyjściowym.",
-      "outputChannels": "Kanały wyjściowe",
       "showOutputChannel": "Pokaż kanał wyjściowy..."
     },
     "plugin": {
@@ -383,6 +375,7 @@
       "profileIcon": "ID codicon do skojarzenia z ikoną terminala.\nterminal-tmux:\"$(terminal-tmux)\"",
       "profileNew": "Nowy Terminal (z profilem)...",
       "profilePath": "Ścieżka powłoki, której używa ten profil.",
+      "profileSource": "Źródło profilu, które automatycznie wykryje ścieżki do powłoki. Zauważ, że niestandardowe lokalizacje plików wykonywalnych nie są obsługiwane i muszą być tworzone ręcznie w nowym profilu.",
       "profiles": "Profile, które mają być prezentowane podczas tworzenia nowego terminala. Ustaw właściwość path ręcznie z opcjonalnymi argumentami.\nUstaw istniejący profil na `null`, aby ukryć profil z listy, na przykład: `\"{0}\": null`.",
       "rendererType": "Kontroluje sposób renderowania terminala.",
       "selectProfile": "Wybrać profil dla nowego terminalu",
@@ -426,7 +419,6 @@
       "license": "Licencja: {0}",
       "recommendedExtensions": "Lista nazw rozszerzeń zalecanych do użycia w tym obszarze roboczym.",
       "searchPlaceholder": "Wyszukaj rozszerzenia w {0}.",
-      "showInstalled": "Pokaż zainstalowane rozszerzenia",
       "showRecommendedExtensions": "Określa, czy dla zaleceń dotyczących rozszerzeń mają być wyświetlane powiadomienia.",
       "vsx-extensions-contribution": {
         "update-version-uninstall-error": "Błąd podczas usuwania rozszerzenia: {0}.",

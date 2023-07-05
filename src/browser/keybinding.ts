@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { injectable, inject, named } from 'inversify';
@@ -620,7 +620,7 @@ export class KeybindingRegistry {
             const { command, context, when, keybinding } = binding;
             if (!this.isUsable(binding)) {
                 disabled = disabled || new Set<string>();
-                disabled.add(JSON.stringify({ command: command.substring(1), context, when, keybinding }));
+                disabled.add(JSON.stringify({ command: command.substr(1), context, when, keybinding }));
                 return false;
             }
             return !disabled?.has(JSON.stringify({ command, context, when, keybinding }));

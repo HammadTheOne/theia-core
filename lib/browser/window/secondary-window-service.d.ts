@@ -1,5 +1,3 @@
-import { ApplicationShell } from '../shell';
-import { ExtractableWidget } from '../widgets';
 export declare const SecondaryWindowService: unique symbol;
 /**
  * Service for opening new secondary windows to contain widgets extracted from the application shell.
@@ -14,7 +12,7 @@ export interface SecondaryWindowService {
      * @param onClose optional callback that is invoked when the secondary window is closed
      * @returns the created window or `undefined` if it could not be created
      */
-    createSecondaryWindow(widget: ExtractableWidget, shell: ApplicationShell): Window | undefined;
+    createSecondaryWindow(onClose?: (win: Window) => void): Window | undefined;
     /** Handles focussing the given secondary window in the browser and on Electron. */
     focus(win: Window): void;
 }

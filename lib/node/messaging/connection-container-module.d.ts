@@ -1,7 +1,7 @@
 import { interfaces, ContainerModule } from 'inversify';
-import { RpcProxy } from '../../common';
+import { JsonRpcProxy } from '../../common';
 export declare type BindFrontendService = <T extends object>(path: string, serviceIdentifier: interfaces.ServiceIdentifier<T>) => interfaces.BindingWhenOnSyntax<T>;
-export declare type BindBackendService = <T extends object, C extends object = object>(path: string, serviceIdentifier: interfaces.ServiceIdentifier<T>, onActivation?: (service: T, proxy: RpcProxy<C>) => T) => void;
+export declare type BindBackendService = <T extends object, C extends object = object>(path: string, serviceIdentifier: interfaces.ServiceIdentifier<T>, onActivation?: (service: T, proxy: JsonRpcProxy<C>) => T) => void;
 export declare type ConnectionContainerModuleCallBack = (registry: {
     bind: interfaces.Bind;
     unbind: interfaces.Unbind;

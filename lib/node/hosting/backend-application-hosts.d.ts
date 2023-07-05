@@ -15,7 +15,7 @@ export declare class BackendApplicationHosts {
      * You can check for this with `.hasKnownHosts()`.
      */
     get hosts(): ReadonlySet<string>;
-    protected init(): void;
+    protected postConstruct(): void;
     /**
      * Do we know where we are hosted?
      */

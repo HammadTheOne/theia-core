@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 // *****************************************************************************
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -77,11 +77,7 @@ export class RpcProtocol {
         this.encoder = options.encoder ?? new MsgPackMessageEncoder();
         this.decoder = options.decoder ?? new MsgPackMessageDecoder();
         this.toDispose.push(this.onNotificationEmitter);
-        channel.onClose(event => {
-            this.pendingRequests.forEach(pending => pending.reject(new Error(event.reason)));
-            this.pendingRequests.clear();
-            this.toDispose.dispose();
-        });
+        channel.onClose(() => this.toDispose.dispose());
         this.toDispose.push(channel.onMessage(readBuffer => this.handleMessage(this.decoder.parse(readBuffer()))));
         this.mode = options.mode ?? 'default';
 
@@ -102,7 +98,7 @@ export class RpcProtocol {
                     return;
                 }
                 case RpcMessageType.Notification: {
-                    this.handleNotify(message.method, message.args, message.id);
+                    this.handleNotify(message.id, message.method, message.args);
                     return;
                 }
             }
@@ -183,7 +179,7 @@ export class RpcProtocol {
         }
 
         const output = this.channel.getWriteBuffer();
-        this.encoder.notification(output, method, args, this.nextMessageId++);
+        this.encoder.notification(output, this.nextMessageId++, method, args);
         output.commit();
     }
 
@@ -230,7 +226,7 @@ export class RpcProtocol {
         }
     }
 
-    protected async handleNotify(method: string, args: any[], id?: number): Promise<void> {
+    protected async handleNotify(id: number, method: string, args: any[]): Promise<void> {
         if (this.toDispose.disposed) {
             return;
         }

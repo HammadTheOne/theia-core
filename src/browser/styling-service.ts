@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { inject, injectable, named } from 'inversify';
@@ -21,7 +21,6 @@ import { ColorRegistry } from './color-registry';
 import { DecorationStyle } from './decoration-style';
 import { FrontendApplicationContribution } from './frontend-application';
 import { ThemeService } from './theming';
-import { Disposable } from '../common';
 
 export const StylingParticipant = Symbol('StylingParticipant');
 
@@ -41,7 +40,8 @@ export interface CssStyleCollector {
 
 @injectable()
 export class StylingService implements FrontendApplicationContribution {
-    protected cssElements = new Map<Window, HTMLStyleElement>();
+
+    protected cssElement = DecorationStyle.createStyleElement('contributedColorTheme');
 
     @inject(ThemeService)
     protected readonly themeService: ThemeService;
@@ -53,22 +53,11 @@ export class StylingService implements FrontendApplicationContribution {
     protected readonly themingParticipants: ContributionProvider<StylingParticipant>;
 
     onStart(): void {
-        this.registerWindow(window);
-        this.themeService.onDidColorThemeChange(e => this.applyStylingToWindows(e.newTheme));
+        this.applyStyling(this.themeService.getCurrentTheme());
+        this.themeService.onDidColorThemeChange(e => this.applyStyling(e.newTheme));
     }
 
-    registerWindow(win: Window): Disposable {
-        const cssElement = DecorationStyle.createStyleElement('contributedColorTheme', win.document.head);
-        this.cssElements.set(win, cssElement);
-        this.applyStyling(this.themeService.getCurrentTheme(), cssElement);
-        return Disposable.create(() => this.cssElements.delete(win));
-    }
-
-    protected applyStylingToWindows(theme: Theme): void {
-        this.cssElements.forEach(cssElement => this.applyStyling(theme, cssElement));
-    }
-
-    protected applyStyling(theme: Theme, cssElement: HTMLStyleElement): void {
+    protected applyStyling(theme: Theme): void {
         const rules: string[] = [];
         const colorTheme: ColorTheme = {
             type: theme.type,
@@ -82,6 +71,6 @@ export class StylingService implements FrontendApplicationContribution {
             themingParticipant.registerThemeStyle(colorTheme, styleCollector);
         }
         const fullCss = rules.join('\n');
-        cssElement.innerText = fullCss;
+        this.cssElement.innerText = fullCss;
     }
 }

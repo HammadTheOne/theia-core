@@ -396,10 +396,6 @@ export declare class ApplicationShell extends Widget {
     getAreaFor(input: TabBar<Widget> | Widget): ApplicationShell.Area | undefined;
     protected getAreaPanelFor(input: Widget): DockPanel | undefined;
     /**
-     * Find the shell panel this top-level widget is part of
-     */
-    protected findPanel(widget: Widget | undefined): TheiaDockPanel | undefined;
-    /**
      * Return the tab bar that has the currently active widget, or undefined.
      */
     get currentTabBar(): TabBar<Widget> | undefined;

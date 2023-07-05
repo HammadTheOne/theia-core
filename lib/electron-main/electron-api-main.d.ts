@@ -13,7 +13,6 @@ export declare class TheiaMainApi implements ElectronMainApplicationContribution
 export declare namespace TheiaRendererAPI {
     function sendWindowEvent(wc: WebContents, event: WindowEvent): void;
     function requestClose(wc: WebContents, stopReason: StopReason): Promise<boolean>;
-    function requestSecondaryClose(mainWindow: WebContents, secondaryWindow: WebContents): Promise<boolean>;
     function onRequestReload(wc: WebContents, handler: () => void): Disposable;
     function onApplicationStateChanged(wc: WebContents, handler: (state: FrontendApplicationState) => void): Disposable;
     function onIpcData(handler: (sender: WebContents, data: Uint8Array) => void): Disposable;

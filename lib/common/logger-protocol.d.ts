@@ -1,7 +1,7 @@
-import { RpcServer } from './messaging/proxy-factory';
+import { JsonRpcServer } from './messaging/proxy-factory';
 export declare const ILoggerServer: unique symbol;
 export declare const loggerPath = "/services/logger";
-export interface ILoggerServer extends RpcServer<ILoggerClient> {
+export interface ILoggerServer extends JsonRpcServer<ILoggerClient> {
     setLogLevel(name: string, logLevel: number): Promise<void>;
     getLogLevel(name: string): Promise<number>;
     log(name: string, logLevel: number, message: any, params: any[]): Promise<void>;

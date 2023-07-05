@@ -1,5 +1,5 @@
 import { Disposable, MaybePromise, CancellationTokenSource } from '../common';
-import { Widget, BaseWidget, Message } from './widgets';
+import { BaseWidget, Message } from './widgets';
 import { FrontendApplicationContribution } from './frontend-application';
 export declare class DialogProps {
     readonly title: string;
@@ -37,7 +37,6 @@ export declare class DialogOverlayService implements FrontendApplicationContribu
     protected static INSTANCE: DialogOverlayService;
     static get(): DialogOverlayService;
     protected readonly dialogs: AbstractDialog<any>[];
-    protected readonly documents: Document[];
     constructor();
     initialize(): void;
     protected get currentDialog(): AbstractDialog<any> | undefined;
@@ -57,10 +56,9 @@ export declare abstract class AbstractDialog<T> extends BaseWidget {
     protected closeButton: HTMLButtonElement | undefined;
     protected acceptButton: HTMLButtonElement | undefined;
     protected activeElement: HTMLElement | undefined;
-    constructor(props: DialogProps, options?: Widget.IOptions);
+    constructor(props: DialogProps);
     protected appendCloseButton(text?: string): HTMLButtonElement;
     protected appendAcceptButton(text?: string): HTMLButtonElement;
-    protected appendButton(text: string, primary: boolean): HTMLButtonElement;
     protected createButton(text: string): HTMLButtonElement;
     protected onAfterAttach(msg: Message): void;
     protected handleEscape(event: KeyboardEvent): boolean | void;
@@ -83,10 +81,8 @@ export declare abstract class AbstractDialog<T> extends BaseWidget {
     protected addCloseAction<K extends keyof HTMLElementEventMap>(element: HTMLElement, ...additionalEventTypes: K[]): void;
     protected addAcceptAction<K extends keyof HTMLElementEventMap>(element: HTMLElement, ...additionalEventTypes: K[]): void;
 }
-export declare class MessageDialogProps extends DialogProps {
+export declare class ConfirmDialogProps extends DialogProps {
     readonly msg: string | HTMLElement;
-}
-export declare class ConfirmDialogProps extends MessageDialogProps {
     readonly cancel?: string;
     readonly ok?: string;
 }
@@ -99,18 +95,16 @@ export declare class ConfirmDialog extends AbstractDialog<boolean> {
     protected createMessageNode(msg: string | HTMLElement): HTMLElement;
 }
 export declare function confirmExit(): Promise<boolean>;
-export declare class ConfirmSaveDialogProps extends MessageDialogProps {
-    readonly cancel: string;
-    readonly dontSave: string;
+export declare class ConfirmSaveDialogProps extends ConfirmDialogProps {
     readonly save: string;
+    performSave: () => Promise<void>;
 }
-export declare class ConfirmSaveDialog extends AbstractDialog<boolean | undefined> {
+export declare class ConfirmSaveDialog extends ConfirmDialog {
     protected readonly props: ConfirmSaveDialogProps;
-    protected result?: boolean;
+    protected saveButton: HTMLButtonElement | undefined;
     constructor(props: ConfirmSaveDialogProps);
-    get value(): boolean | undefined;
-    protected createMessageNode(msg: string | HTMLElement): HTMLElement;
-    protected appendButtonAndSetResult(text: string, primary: boolean, result?: boolean): HTMLButtonElement;
+    protected appendSaveButton(text?: string): HTMLButtonElement;
+    protected onActivateRequest(msg: Message): void;
 }
 export declare function confirmExitWithOrWithoutSaving(captionsToSave: string[], performSave: () => Promise<void>): Promise<boolean>;
 export declare class SingleTextInputDialogProps extends DialogProps {

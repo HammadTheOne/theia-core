@@ -18,7 +18,7 @@ export declare class PreferenceProxyChange extends PreferenceChangeImpl {
 export declare class InjectablePreferenceProxy<T extends Record<string, JSONValue>> implements ProxyHandler<T>, ProxyHandler<Disposable>, ProxyHandler<PreferenceEventEmitter<T>>, ProxyHandler<PreferenceRetrieval<T>> {
     protected readonly options: PreferenceProxyOptions;
     protected readonly preferences: PreferenceService;
-    protected readonly promisedSchema: () => PreferenceSchema | Promise<PreferenceSchema>;
+    protected readonly promisedSchema: PreferenceSchema | Promise<PreferenceSchema>;
     protected readonly factory: PreferenceProxyFactory;
     protected toDispose: DisposableCollection;
     protected _onPreferenceChangedEmitter: Emitter<PreferenceChangeEvent<T>> | undefined;

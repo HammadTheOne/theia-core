@@ -17,12 +17,7 @@ export interface BackendApplicationServer extends BackendApplicationContribution
 }
 export declare const BackendApplicationContribution: unique symbol;
 /**
- * Contribution for hooking into the backend lifecycle:
- *
- * - `initialize()`
- * - `configure(expressApp)`
- * - `onStart(httpServer)`
- * - `onStop()`
+ * Contribution for hooking into the backend lifecycle.
  */
 export interface BackendApplicationContribution {
     /**
@@ -91,7 +86,6 @@ export declare class BackendApplication {
     protected readonly stopwatch: Stopwatch;
     constructor(contributionsProvider: ContributionProvider<BackendApplicationContribution>, cliParams: BackendApplicationCliContribution);
     protected initialize(): Promise<void>;
-    protected init(): void;
     protected configure(): Promise<void>;
     use(...handlers: express.Handler[]): void;
     start(aPort?: number, aHostname?: string): Promise<http.Server | https.Server>;

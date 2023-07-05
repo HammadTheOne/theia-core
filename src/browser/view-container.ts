@@ -11,7 +11,7 @@
 // with the GNU Classpath Exception which is available at
 // https://www.gnu.org/software/classpath/license.html.
 //
-// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 // *****************************************************************************
 
 import { interfaces, injectable, inject, postConstruct } from 'inversify';
@@ -77,8 +77,8 @@ export namespace BadgeWidget {
 }
 
 /**
- * A widget that may change it's internal structure dynamically.
- * Current use is to update the toolbar when a contributed view is constructed "lazily".
+ * A widget that may change it's internal structure dynamically. Current use is for
+ * updating the toolbar when a contributed view is contructed "lazily"
  */
 export interface DynamicToolbarWidget {
     onDidChangeToolbarItems: CommonEvent<void>;

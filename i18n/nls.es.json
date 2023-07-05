@@ -1,5 +1,4 @@
 {
-  "debug.breakpoint.editCondition": "Editar condición...",
   "terminal:new:profile": "Crear un nuevo terminal integrado a partir de un perfil",
   "terminal:profile:default": "Elija el perfil de terminal por defecto",
   "theia": {
@@ -45,10 +44,6 @@
         "pc": "Teclados para PC",
         "tryDetect": "Intenta detectar la distribución del teclado a partir de la información del navegador y de las teclas pulsadas."
       },
-      "navigator": {
-        "clipboardWarn": "El acceso al portapapeles está denegado. Comprueba los permisos de tu navegador.",
-        "clipboardWarnFirefox": "La API del portapapeles no está disponible. Se puede activar mediante la preferencia '{0}' en la página '{1}'. A continuación, vuelva a cargar Theia. Tenga en cuenta que esto permitirá a FireFox tener acceso completo al portapapeles del sistema."
-      },
       "offline": "Fuera de línea",
       "quitMessage": "Cualquier cambio no guardado no se guardará.",
       "resetWorkbenchLayout": "Restablecer la disposición del banco de trabajo",
@@ -77,12 +72,15 @@
       "toggleTracing": "Activar/desactivar las comunicaciones de rastreo con los adaptadores de depuración"
     },
     "editor": {
+      "diffEditor.diffAlgorithm.experimental": "Utiliza un algoritmo de difusión experimental.",
+      "diffEditor.diffAlgorithm.smart": "Utiliza el algoritmo de diffing por defecto.",
       "dirtyEncoding": "El archivo está sucio. Por favor, guárdelo primero antes de volver a abrirlo con otra codificación.",
       "editor.codeActionWidget.showHeaders": "Activar/desactivar la visualización de las cabeceras de los grupos en el menú de acción del código.",
       "editor.formatOnSaveMode.modificationsIfAvailable": "Intentará formatear sólo las modificaciones (requiere control de origen). Si no se puede utilizar el control de origen, se formateará todo el archivo.",
       "editor.inlayHints.enabled1": "Los consejos de incrustación se muestran por defecto y se ocultan cuando se mantiene `Ctrl+Alt`.",
       "editor.inlayHints.enabled2": "Los consejos de incrustación están ocultos por defecto y se muestran cuando se mantiene pulsado `Ctrl+Alt`.",
       "editor.quickSuggestions": "Controla si las sugerencias deben aparecer automáticamente mientras se escribe. Esto puede controlarse para escribir comentarios, cadenas y otros códigos. La sugerencia rápida puede ser configurada para mostrarse como texto fantasma o con el widget de sugerencia. También hay que tener en cuenta la configuración '#editor.suggestOnTriggerCharacters#' que controla si las sugerencias son activadas por caracteres especiales.",
+      "editor.stickyScroll.maxLineCount": "Define el número máximo de líneas adhesivas a mostrar.",
       "editor.suggest.matchOnWordStartOnly": "Cuando se activa el filtro IntelliSense se requiere que el primer carácter coincida con el inicio de una palabra, por ejemplo `c` en `Console` o `WebContext` pero _no_ en `description`. Si se desactiva, IntelliSense mostrará más resultados, pero los ordenará según la calidad de la coincidencia.",
       "files.autoSave": "Controla el [autoguardado](https://code.visualstudio.com/docs/editor/codebasics#_save-auto-save) de los editores que tienen cambios sin guardar.",
       "files.autoSave.afterDelay": "Un editor con cambios se guarda automáticamente después del `#files.autoSaveDelay#` configurado.",
@@ -159,15 +157,11 @@
       "gitDecorationsColors": "Utilice la decoración de colores en el navegador.",
       "mergeQuickPickPlaceholder": "Elige una rama para fusionar con la rama {0} actualmente activa:",
       "missingUserInfo": "Asegúrate de configurar tu 'user.name' y 'user.email' en git.",
-      "noHistoryForError": "No hay historial disponible para {0}",
       "noPreviousCommit": "No hay compromiso previo para modificar",
       "noRepositoriesSelected": "No se ha seleccionado ningún repositorio.",
-      "prepositionIn": "en",
       "repositoryNotInitialized": "El repositorio {0} aún no está inicializado.",
       "stashChanges": "Cambios en el alijo. Pulse \"Enter\" para confirmar o \"Escape\" para cancelar.",
       "stashChangesWithMessage": "Cambios en el alijo con mensaje: {0}. Pulse 'Enter' para confirmar o 'Escape' para cancelar.",
-      "tabTitleIndex": "{0} (índice)",
-      "tabTitleWorkingTree": "{0} (Árbol de trabajo)",
       "toggleBlameAnnotations": "Alternar las anotaciones de culpabilidad"
     },
     "keybinding-schema-updater": {
@@ -216,6 +210,7 @@
         "offset-title": "Bytes para compensar la memoria de {0}"
       },
       "editable": {
+        "apply": "Aplicar cambios",
         "clear": "Cambios claros"
       },
       "endianness": "Endiosamiento",
@@ -277,8 +272,6 @@
     },
     "navigator": {
       "autoReveal": "Auto Reveal",
-      "clipboardWarn": "El acceso al portapapeles está denegado. Comprueba los permisos de tu navegador.",
-      "clipboardWarnFirefox": "La API del portapapeles no está disponible. Se puede activar mediante la preferencia '{0}' en la página '{1}'. A continuación, vuelva a cargar Theia. Tenga en cuenta que esto permitirá a FireFox tener acceso completo al portapapeles del sistema.",
       "refresh": "Actualizar en el Explorador",
       "reveal": "Revelar en el Explorador",
       "toggleHiddenFiles": "Activar los archivos ocultos"
@@ -289,7 +282,6 @@
       "hiddenChannels": "Canales ocultos",
       "hideOutputChannel": "Ocultar canal de salida...",
       "maxChannelHistory": "El número máximo de entradas en un canal de salida.",
-      "outputChannels": "Canales de salida",
       "showOutputChannel": "Mostrar canal de salida..."
     },
     "plugin": {
@@ -383,6 +375,7 @@
       "profileIcon": "Un ID de codicon para asociar con el icono de terminal.\nterminal-tmux:\"$(terminal-tmux)\"",
       "profileNew": "Nuevo Terminal (Con Perfil)...",
       "profilePath": "La ruta del shell que utiliza este perfil.",
+      "profileSource": "Una fuente de perfil que detectará automáticamente las rutas al shell. Tenga en cuenta que las ubicaciones de ejecutables no estándar no son compatibles y deben crearse manualmente en un nuevo perfil.",
       "profiles": "Los perfiles a presentar cuando se crea un nuevo terminal. Establezca la propiedad path manualmente con argumentos opcionales.\nEstablezca un perfil existente como `null` para ocultar el perfil de la lista, por ejemplo: `\"{0}\": null`.",
       "rendererType": "Controla cómo se representa el terminal.",
       "selectProfile": "Seleccione un perfil para el nuevo terminal",
@@ -426,7 +419,6 @@
       "license": "License: {0}",
       "recommendedExtensions": "Una lista de los nombres de las extensiones recomendadas para su uso en este espacio de trabajo.",
       "searchPlaceholder": "Buscar extensiones en {0}",
-      "showInstalled": "Mostrar extensiones instaladas",
       "showRecommendedExtensions": "Controla si se muestran las notificaciones de las recomendaciones de extensión.",
       "vsx-extensions-contribution": {
         "update-version-uninstall-error": "Error al eliminar la extensión: {0}.",
